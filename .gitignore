@@ -1,0 +1,87 @@
+# Python
+
+**pycache**/
+*.py[cod]
+*$py.class
+
+# Virtual Environments
+
+venv/
+.venv/
+env/
+ENV/
+
+# IDEs
+
+.vscode/
+.idea/
+
+# macOS
+
+.DS_Store
+
+# Windows
+
+Thumbs.db
+desktop.ini
+
+# Jupyter Notebooks
+
+.ipynb_checkpoints/
+
+# Pytest
+
+.pytest_cache/
+
+# Coverage
+
+.coverage
+htmlcov/
+
+# Build / Distribution
+
+build/
+dist/
+*.egg-info/
+
+# Logs
+
+*.log
+
+# Environment Variables
+
+.env
+
+# SQLite Databases
+
+*.db
+*.sqlite3
+
+# Generated Reports
+
+reports/
+*.csv
+
+# Temporary Files
+
+tmp/
+temp/
+
+# Python Type Checkers
+
+.mypy_cache/
+.pyre/
+.ruff_cache/
+
+# OS Generated Files
+
+*.swp
+*.swo
+
+# Local User Data
+
+user_data/
+
+# Uploads (future-proofing)
+
+uploads/
