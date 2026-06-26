@@ -1,0 +1,16 @@
+What you can access for free
+
+The BIS SDMX API is public and does not require authentication for released statistical datasets. It exposes:
+
+International Banking Statistics
+Credit to Private Sector
+Debt Securities Statistics
+Property Price Statistics
+Exchange Rates
+Derivatives Statistics
+Central Bank Statistics
+Financial Stability Indicators
+
+through SDMX REST APIs.
+
+As an individual sitting at home, you can do exactly the same discovery that professional economists do.

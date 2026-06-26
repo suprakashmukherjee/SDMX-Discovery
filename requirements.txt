@@ -1,0 +1,3 @@
+pandas
+sdmx1
+tabulate
