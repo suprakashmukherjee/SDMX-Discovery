@@ -14,3 +14,191 @@ Financial Stability Indicators
 through SDMX REST APIs.
 
 As an individual sitting at home, you can do exactly the same discovery that professional economists do.
+
+----------------
+First 30 Minutes: Discover Dataflows
+
+In SDMX, a Dataflow is equivalent to:
+
+"A dataset family"
+
+Examples:
+
+International Banking Statistics
+Credit Statistics
+Property Prices
+Exchange Rates
+
+Your first task should be:
+
+import sdmx
+
+bis = sdmx.Client("BIS")
+
+flows = bis.dataflow()
+
+or, depending on the library version:
+
+flows = bis.get("dataflow")
+
+Then inspect:
+
+for k in list(flows.dataflow.keys())[:20]:
+    print(k)
+
+Your goal:
+
+Create a dataframe:
+
+flow_id	flow_name
+CBS	Credit Statistics
+IBS	International Banking Statistics
+...	...
+
+This becomes your catalog.
+
+Dataflow discovery is the SDMX equivalent of browsing database tables.
+
+Next 30 Minutes: Discover Structures (DSDs)
+
+Pick one interesting dataflow.
+
+For example:
+
+flow = flows.dataflow["CBS"]
+
+Retrieve its Data Structure Definition (DSD).
+
+The DSD tells you:
+
+Dimensions
+Measures
+Time dimensions
+Allowed codes
+
+Think of it as:
+
+DESCRIBE TABLE
+
+for SDMX.
+
+Next 30 Minutes: Build a Metadata Explorer
+
+Create a dataframe like:
+
+Dimension	Description
+REF_AREA	Country
+TIME_PERIOD	Date
+FREQ	Frequency
+MEASURE	Indicator
+
+This immediately tells you:
+
+Which countries exist
+Which indicators exist
+Which frequencies exist
+
+without downloading a single observation.
+
+This is the most useful thing for your SDMX-Discovery project.
+
+Last 30 Minutes: Pull One Dataset
+
+Good starter datasets:
+
+Credit to Private Sector
+
+Interesting for:
+
+Housing bubbles
+Lending growth
+Economic cycles
+Residential Property Prices
+
+Interesting for:
+
+Real estate analytics
+Inflation-adjusted housing trends
+Exchange Rates
+
+Interesting for:
+
+Currency analysis
+Volatility studies
+Debt Securities
+
+Interesting for:
+
+Government debt analysis
+Bond market trends
+
+All are publicly available via BIS APIs.
+
+Analytics You Can Build Today
+
+Within 2 hours, I'd target one of these:
+
+Option 1: Global Housing Bubble Dashboard
+
+Using BIS Property Price data:
+
+Country ranking
+YoY growth
+Heatmap
+Trend analysis
+
+Portfolio value: High
+
+Option 2: Global Credit Growth Monitor
+
+Using Credit Statistics:
+
+Credit-to-GDP ratio
+Lending growth
+Country comparison
+
+Portfolio value: Very High
+
+This looks like something a central bank analyst would build.
+
+Option 3: Exchange Rate Analytics
+
+Using BIS exchange rate datasets:
+
+INR vs USD
+EUR vs CHF
+Volatility calculations
+
+Portfolio value: Medium
+
+Option 4: SDMX Metadata Explorer
+
+This is the one I'd recommend for "SDMX-Discovery".
+
+Build:
+
+SDMX-Discovery
+│
+├── Discover Dataflows
+├── Discover DSDs
+├── Discover Dimensions
+├── Discover Codelists
+├── Search Countries
+├── Search Indicators
+└── Generate Query Templates
+
+Think of it as:
+
+"Data Catalog for SDMX APIs"
+
+This demonstrates:
+
+API engineering
+Metadata-driven analytics
+Data governance concepts
+SDMX expertise
+
+which is much rarer on a resume than another dashboard.
+
+If you're using the Python sdmx library, I can also give you a 
+90-minute hands-on roadmap with exact BIS API calls, code snippets, and the expected outputs for each step, so you can have a working SDMX-Discovery prototype tonight.
