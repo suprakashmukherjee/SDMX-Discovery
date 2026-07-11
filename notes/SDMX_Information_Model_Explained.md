@@ -2,9 +2,9 @@
 
 ## Let's build a real system from scratch
 
-### Step 1: Imagine BIS wants to publish Inflation Statistics
+# Step 1: Imagine an Institution wants to publish Inflation Statistics
 
-Suppose BIS wants to publish the following dataset.
+Suppose the Institution wants to publish the following dataset.
 
 | Country | Indicator | Frequency | Time     | Inflation |
 | ------- | --------- | --------- | -------- | --------: |
@@ -20,7 +20,7 @@ Looks simple.
 
 But now let's design the database.
 
-## Step 2: Traditional Database Design
+# Step 2: Traditional Database Design
 
 A data engineer rarely stores everything in one table. Instead, we'd
 normalize it.
@@ -282,18 +282,18 @@ Together they identify one row.
 
 ------------------------------------------------------------------------
 
-6. Measure
+## 6. Measure
 
 Now that we've identified the row,
 
 what is the number?
 3.4
 
-That is the Measure.
+The Measure is the actual numeric value.
 
-Usually
+Typically:
 
-OBS_VALUE
+`OBS_VALUE`
 
 Our table becomes
 
@@ -305,17 +305,21 @@ Our table becomes
 Everything left of OBS_VALUE identifies the fact.
 OBS_VALUE is the fact.
 
+------------------------------------------------------------------------
 
-7. Attributes
+
+## 7. Attributes
+
+Attributes describe an observation but do not identify it.
 
 Suppose we also want to say
-Unit = Percent
+Examples:
 
-Decimals = 1
+-   Unit = Percent
+-   Decimals = 1
+-   Status = Preliminary
+-   Source = RBI
 
-Status = Preliminary
-
-Source = RBI
 
 These do not identify the row.
 
@@ -332,59 +336,53 @@ Neither is Status.
 
 These are Attributes.
 
+------------------------------------------------------------------------
 
 
-
-
-8. Constraints
+## 8. Constraints
 
 Suppose this dataset only contains
 
-India
-
-USA
-
-Japan
+- India
+- USA
+- Japan
 
 Although the global country codelist contains about 250 countries.
 
-Constraint
+### Constraint
 Allowed Countries
-
-IN
-
-US
-
-JP
+- IN
+- US
+- JP
 
 Or
 
 Only Monthly data
-
-Frequency
-
-M
+- Frequency
+- M
 
 Or
 
 Only CPI
-Indicator
-
-CPI
+- Indicator
+- CPI
 
 Constraints narrow the valid combinations for a particular dataset.
 
+Constraints restrict valid values.
 
+-   Countries allowed: IN, US, JP
+-   Frequency: M only
+-   Indicator: CPI only
 
+------------------------------------------------------------------------
 
-9. Metadata
+## 9. Metadata
 
 This is one of the biggest differences between SDMX and a plain database.
 
 Suppose someone downloads the value
 3.4
-
-
 
 
 Questions immediately arise:
@@ -398,32 +396,23 @@ What is the unit?
 
 Metadata answers all of these.
 
-For example:
+Example:
 
-
-Title:
-Monthly CPI Inflation
-
-Definition:
-Consumer Price Index measuring year-on-year inflation.
-
-Source:
-Reserve Bank of India
-
-Release Calendar:
-15th of every month
-
-Methodology:
-ILO 2023 Standard
-
-Contact:
-statistics@bis.org
+- Title: Monthly CPI Inflation
+- Definition: Consumer Price Index measuring year-on-year inflation.
+- Source: Reserve Bank of India
+- Release Calendar: 15th of every month
+- Methodology: ILO 2023 Standard
+- Contact: statistics@institution.org
 
 Metadata makes the numbers interpretable.
 
+Without metadata, numbers lose their meaning.
+
+------------------------------------------------------------------------
 
 
-10. Data
+## 10. Data
 
 Only now do we reach the actual observations.
 | Country | Indicator | Frequency | Time    | Value |
@@ -436,14 +425,16 @@ Everything before this point was describing how the data should look.
 
 This table is the actual data.
 
+------------------------------------------------------------------------
 
-
-11. REST API / XML / JSON
+## 11. REST API / XML / JSON
 
 The beauty of SDMX is that all these structures can be discovered programmatically.
 
 A typical client workflow looks like this:
 
+
+``` text
 Client
    │
    ▼
@@ -494,17 +485,17 @@ Request Data
    │
    ▼
 Receive SDMX-JSON or SDMX-XML
-
+```
 
 
 This is fundamentally different from a typical REST API, where you often have to read separate documentation to understand the schema. In SDMX, the schema itself is machine-readable and discoverable.
 
+------------------------------------------------------------------------
+
+# Putting It All Together
 
 
-
-
-Putting it all together
-
+``` text
                     DATAFLOW
         "Monthly Inflation Statistics"
                            │
@@ -514,7 +505,6 @@ Putting it all together
       ┌────────────────────┼────────────────────┐
       ▼                    ▼                    ▼
   Concepts             Codelists          Constraints
-      │                    │                    │
       │                    │                    │
  Country            IN = India          Only M frequency
  Indicator          US = USA            Only CPI
@@ -526,18 +516,16 @@ Putting it all together
                            │
                            ▼
                      Actual Data
- ┌──────────────────────────────────────────────────────────┐
- │ IN | CPI | M | 2025-01 | 3.4 | Percent | Preliminary     │
- │ IN | CPI | M | 2025-02 | 3.6 | Percent | Preliminary     │
- │ US | CPI | M | 2025-01 | 2.8 | Percent | Final           │
- └──────────────────────────────────────────────────────────┘
+ IN | CPI | M | 2025-01 | 3.4 | Percent | Preliminary
+ IN | CPI | M | 2025-02 | 3.6 | Percent | Preliminary
+ US | CPI | M | 2025-01 | 2.8 | Percent | Final
                            │
                            ▼
                      Metadata
-      Definition • Methodology • Source • Contact • Revisions
+ Definition • Methodology • Source • Contact • Revisions
                            │
                            ▼
-               Exposed as SDMX-JSON / SDMX-XML via REST API
-
+              Exposed as SDMX-JSON / SDMX-XML via REST API
+```
 
 This diagram captures the essence of the SDMX Information Model: the observations are just one layer. The real power of SDMX is that every dataset carries a formal, machine-readable description of its structure, meaning, allowed values, and documentation, enabling organizations like BIS, IMF, ECB, and OECD to exchange statistical data without having to negotiate a new schema for every dataset.
