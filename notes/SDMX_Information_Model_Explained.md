@@ -154,9 +154,9 @@ It specifies:
     -   Unit
     -   Status
     -   Decimals
+
+
 The DSD defines structure, not the actual observations.
-
-
 
 It also specifies which codelists must be used.
 
